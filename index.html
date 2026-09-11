@@ -2,153 +2,545 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIFA 26 路 Torneo Cervinara</title>
+<title>Torneo FIFA 26 - Cervinara</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Rajdhani:wght@500;600;700&display=swap');
 
 :root{
-  --pitch-dark:#05130b;
-  --pitch-deep:#071f12;
-  --lime:#c8ff3d;
-  --cyan:#23f0ff;
-  --pink:#ff2f8f;
-  --gold:#ffcc33;
-  --white:#f4fff0;
-  --muted:rgba(244,255,240,.68);
+  --pitch-dark: #05130b;
+  --pitch-deep: #071f12;
+  --neon-lime: #c8ff3d;
+  --neon-lime-soft: #dfffa0;
+  --electric-cyan: #23f0ff;
+  --hot-magenta: #ff2f8f;
+  --gold: #ffcc33;
+  --white: #f4fff0;
+  --line-white: rgba(244,255,240,0.55);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  min-height:100vh;
-  color:var(--white);
-  font-family:'Rajdhani',sans-serif;
-  background:
-    radial-gradient(circle at 50% -10%,rgba(35,240,255,.16),transparent 35%),
-    radial-gradient(circle at 100% 100%,rgba(255,47,143,.13),transparent 40%),
-    linear-gradient(180deg,var(--pitch-dark),var(--pitch-deep) 55%,#030b06);
+
+*{ box-sizing: border-box; margin:0; padding:0; }
+
+html,body{
+  background: var(--pitch-dark);
+  width: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-.container{width:min(920px,92%);margin:auto;padding:42px 0 60px}
-.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.poster{
+  position: relative;
+  width: 900px;
+  height: 1275px;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(35,240,255,0.18), transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(255,47,143,0.16), transparent 50%),
+    linear-gradient(180deg, var(--pitch-dark) 0%, var(--pitch-deep) 55%, #030b06 100%);
+  overflow: hidden;
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--white);
+  isolation: isolate;
+}
+
+/* pitch stripes texture */
+.stripes{
+  position:absolute;
+  inset:0;
+  background: repeating-linear-gradient(
+    100deg,
+    rgba(255,255,255,0.025) 0px,
+    rgba(255,255,255,0.025) 60px,
+    transparent 60px,
+    transparent 120px
+  );
+  z-index:0;
+}
+
+/* pitch lines arc bottom */
+.pitch-lines{
+  position:absolute;
+  bottom:-260px;
+  left:50%;
+  transform: translateX(-50%);
+  width: 1400px;
+  height: 700px;
+  z-index:0;
+  opacity:0.5;
+}
+
+/* grain */
+.grain{
+  position:absolute; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  z-index: 5;
+  pointer-events:none;
+  mix-blend-mode: overlay;
+}
+
+/* top vignette bar */
+.top-bar{
+  position:relative;
+  z-index:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 34px 46px 0 46px;
+}
 .tag{
-  display:inline-block;padding:7px 15px;border-radius:4px;
-  background:var(--lime);color:var(--pitch-dark);
-  font-family:'Barlow Condensed';font-weight:800;letter-spacing:3px;text-transform:uppercase
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:800;
+  letter-spacing:4px;
+  font-size: 15px;
+  color: var(--pitch-dark);
+  background: var(--neon-lime);
+  padding: 7px 16px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  box-shadow: 0 0 22px rgba(200,255,61,0.55);
 }
-.tag.alt{background:transparent;color:var(--cyan);border:1px solid var(--cyan)}
-.hero{text-align:center;padding:45px 0 30px}
-.pre{color:var(--cyan);font-family:'Barlow Condensed';font-weight:800;letter-spacing:8px;text-transform:uppercase}
-h1{font-family:Anton;font-size:clamp(100px,19vw,190px);line-height:.82;letter-spacing:2px}
-h1 span{color:var(--lime)}
-.hero h2{font-family:'Archivo Black';font-size:clamp(25px,5vw,43px);letter-spacing:8px;margin-top:12px}
-.hero h2 span{color:var(--pink)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:24px 0 22px}
-.card{
-  background:rgba(244,255,240,.045);border:1px solid rgba(244,255,240,.16);
-  padding:20px;text-align:center
+.tag.alt{
+  background: transparent;
+  color: var(--electric-cyan);
+  border: 1.5px solid var(--electric-cyan);
+  box-shadow: 0 0 18px rgba(35,240,255,0.35);
 }
-.label{color:var(--lime);font-family:'Barlow Condensed';font-weight:800;letter-spacing:2px;text-transform:uppercase}
-.value{font-family:'Archivo Black';font-size:28px;margin-top:6px}
-.value.gold{color:var(--gold)}
-.participants{
-  margin-top:24px;padding:30px;border:1px solid rgba(200,255,61,.35);
-  border-radius:14px;background:linear-gradient(120deg,rgba(200,255,61,.10),rgba(35,240,255,.025))
+
+/* headline block */
+.headline{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  margin-top: 26px;
+  padding: 0 30px;
 }
-.participants-head{display:flex;justify-content:space-between;align-items:end;gap:15px}
-.participants h3,.section h3{font-family:'Archivo Black';text-transform:uppercase;letter-spacing:1px}
-.counter{font-family:Anton;font-size:64px;color:var(--lime);line-height:.9}
-.counter small{font-family:'Barlow Condensed';font-size:20px;color:var(--muted)}
-.progress{height:12px;background:rgba(255,255,255,.09);border-radius:99px;overflow:hidden;margin-top:20px}
-.progress i{display:block;height:100%;width:75%;background:linear-gradient(90deg,var(--lime),var(--cyan));border-radius:99px}
-.note{margin-top:10px;color:var(--muted);font-size:16px}
-.section{margin-top:22px;padding:26px;border:1px solid rgba(244,255,240,.14);border-radius:14px;background:rgba(0,0,0,.18)}
-.section h3{font-size:25px;color:var(--cyan);margin-bottom:12px}
-.section p,.section li{font-size:18px;line-height:1.45;color:var(--muted)}
-.section ul{padding-left:22px}
-.placeholder{border:1px dashed rgba(244,255,240,.25);padding:18px;text-align:center;color:var(--muted)}
-.footer{text-align:center;margin-top:34px;color:var(--muted);font-size:14px}
-@media(max-width:650px){
-  .container{padding-top:24px}
-  .grid{grid-template-columns:1fr}
-  .hero{padding-top:35px}
-  .participants-head{align-items:center}
-  .counter{font-size:52px}
+.pre-title{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  font-style: italic;
+  letter-spacing: 10px;
+  font-size: 22px;
+  color: var(--electric-cyan);
+  text-transform: uppercase;
+  text-shadow: 0 0 14px rgba(35,240,255,0.6);
 }
+.title-fifa{
+  font-family: 'Anton', sans-serif;
+  font-size: 195px;
+  line-height: 0.85;
+  letter-spacing: 2px;
+  color: var(--white);
+  -webkit-text-stroke: 3px rgba(200,255,61,0.9);
+  text-shadow:
+    0 0 40px rgba(200,255,61,0.45),
+    0 0 90px rgba(35,240,255,0.25);
+  margin-top: 6px;
+}
+.title-26{
+  color: var(--neon-lime);
+  -webkit-text-stroke: 0px;
+}
+.subtitle-torneo{
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 40px;
+  letter-spacing: 14px;
+  color: var(--white);
+  margin-top: -6px;
+  text-transform: uppercase;
+}
+.subtitle-torneo span{ color: var(--hot-magenta); }
+
+/* date + location strip */
+.info-strip{
+  position:relative;
+  z-index:2;
+  margin: 38px auto 0 auto;
+  width: 760px;
+  display:flex;
+  align-items:stretch;
+  justify-content:center;
+  gap: 0;
+}
+.info-block{
+  flex:1;
+  background: rgba(244,255,240,0.04);
+  border: 1px solid rgba(244,255,240,0.18);
+  padding: 18px 10px;
+  text-align:center;
+  position:relative;
+}
+.info-block:first-child{ border-radius: 8px 0 0 8px; }
+.info-block:last-child{ border-radius: 0 8px 8px 0; }
+.info-block:not(:last-child){ border-right: none; }
+.info-label{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  letter-spacing:3px;
+  font-size: 13px;
+  color: var(--neon-lime-soft);
+  text-transform: uppercase;
+  opacity:0.85;
+}
+.info-value{
+  font-family:'Archivo Black', sans-serif;
+  font-size: 26px;
+  color: var(--white);
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+.info-value.dates{ color: var(--gold); }
+
+/* location banner */
+.location-section{
+  position:relative;
+  z-index:2;
+  margin: 30px 70px 0 70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 26px;
+}
+.location-banner{
+  text-align:center;
+}
+.location-banner .pin{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:700;
+  letter-spacing: 3px;
+  font-size: 16px;
+  color: var(--line-white);
+  text-transform: uppercase;
+}
+.location-banner .city{
+  font-family:'Anton', sans-serif;
+  font-size: 62px;
+  color: var(--white);
+  letter-spacing: 3px;
+  margin-top: 2px;
+  text-shadow: 0 0 24px rgba(255,47,143,0.4);
+}
+.location-banner .city em{
+  font-style: normal;
+  color: var(--hot-magenta);
+}
+.maps-qr-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  flex-shrink:0;
+}
+.maps-qr-box{
+  background: var(--white);
+  padding: 8px;
+  border-radius: 10px;
+  width: 88px;
+  height: 88px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 0 0 2px var(--hot-magenta), 0 0 20px rgba(255,47,143,0.5);
+}
+.maps-qr-box svg{ width:100%; height:100%; }
+.maps-qr-caption{
+  margin-top: 6px;
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  font-size: 11px;
+  color: var(--hot-magenta);
+  text-transform: uppercase;
+  text-align:center;
+  max-width: 100px;
+  line-height: 1.2;
+}
+
+/* prize section */
+.prize-section{
+  position:relative;
+  z-index:2;
+  margin: 44px 70px 0 70px;
+  background: linear-gradient(120deg, rgba(255,204,51,0.14), rgba(255,204,51,0.02));
+  border: 1.5px solid rgba(255,204,51,0.45);
+  border-radius: 14px;
+  padding: 26px 34px;
+  display:flex;
+  align-items:center;
+  gap: 24px;
+}
+.prize-icon{
+  flex-shrink:0;
+  width: 72px;
+  height: 72px;
+}
+.prize-text-wrap{ flex: 1; }
+.prize-title{
+  font-family:'Archivo Black', sans-serif;
+  font-size: 30px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.prize-desc{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--white);
+  margin-top: 4px;
+  line-height: 1.25;
+}
+
+/* format note */
+.format-note{
+  position:relative;
+  z-index:2;
+  margin: 22px 70px 0 70px;
+  text-align:center;
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.5;
+  color: rgba(244,255,240,0.85);
+  border-top: 1px dashed rgba(244,255,240,0.25);
+  border-bottom: 1px dashed rgba(244,255,240,0.25);
+  padding: 14px 10px;
+}
+.format-note b{ color: var(--electric-cyan); font-style: normal; }
+
+/* controller graphic */
+.console-glow{
+  position:absolute;
+  z-index:1;
+  bottom: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 340px;
+  opacity: 0.9;
+  pointer-events:none;
+}
+
+/* footer */
+.footer{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:3;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.8) 30%, #000 100%);
+  padding: 110px 46px 32px 46px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap: 20px;
+}
+.footer-left{
+  font-family:'Barlow Condensed', sans-serif;
+}
+.footer-cta{
+  font-family:'Archivo Black', sans-serif;
+  font-size: 24px;
+  color: var(--neon-lime);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.footer-sub{
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--line-white);
+  margin-top: 4px;
+  max-width: 300px;
+  line-height: 1.3;
+}
+
+.phone-list{
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.phone-row{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+}
+.phone-icon{
+  color: var(--neon-lime);
+  font-size: 15px;
+}
+.phone-num{
+  font-family:'Archivo Black', sans-serif;
+  font-size: 19px;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+.phone-name{
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(244,255,240,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-right{
+  display:flex;
+  align-items:flex-end;
+  gap: 16px;
+}
+.qr-box{
+  background: var(--white);
+  padding: 10px;
+  border-radius: 10px;
+  width: 108px;
+  height: 108px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 0 0 2px #25D366, 0 0 24px rgba(37,211,102,0.55);
+  flex-shrink:0;
+}
+.qr-box svg{
+  width: 100%;
+  height: 100%;
+}
+.qr-caption{
+  text-align:center;
+  margin-top: 6px;
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #25D366;
+  text-transform: uppercase;
+}
+.qr-wrap{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+}
+
+/* corner accents */
+.corner{
+  position:absolute;
+  width: 90px; height: 90px;
+  border: 3px solid var(--neon-lime);
+  opacity: 0.7;
+  z-index: 4;
+}
+.corner.tl{ top: 20px; left: 20px; border-right:none; border-bottom:none; }
+.corner.br{ bottom: 20px; right: 20px; border-left:none; border-top:none; }
+
 </style>
 </head>
 <body>
-<main class="container">
 
-  <div class="top">
-    <div class="tag">Torneo Ufficiale</div>
-    <div class="tag alt">1v1 路 SOLO PS5</div>
-  </div>
+<div class="poster">
+  <div class="stripes"></div>
 
-  <section class="hero">
-    <div class="pre">Iscrizioni Aperte</div>
-    <h1>FIFA<span>26</span></h1>
-    <h2>TORNEO <span>路</span> CERVINARA</h2>
-  </section>
+  <svg class="pitch-lines" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="700" cy="700" rx="640" ry="360" fill="none" stroke="#c8ff3d" stroke-width="3"/>
+    <ellipse cx="700" cy="700" rx="420" ry="230" fill="none" stroke="#23f0ff" stroke-width="2"/>
+    <line x1="60" y1="700" x2="1340" y2="700" stroke="#f4fff0" stroke-width="2" opacity="0.3"/>
+  </svg>
 
-  <section class="grid">
-    <div class="card"><div class="label">Inizio</div><div class="value gold">16 OTT</div></div>
-    <div class="card"><div class="label">Fine</div><div class="value gold">18 OTT</div></div>
-    <div class="card"><div class="label">Anno</div><div class="value">2026</div></div>
-  </section>
+  <svg class="console-glow" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="450" cy="170" r="150" fill="url(#glowGrad)"/>
+    <defs>
+      <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#c8ff3d" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#c8ff3d" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+  </svg>
 
-  <!-- MODIFICA SOLO QUESTI DUE NUMERI QUANDO SERVE -->
-  <section class="participants">
-    <div class="participants-head">
-      <div>
-        <div class="label">Partecipanti iscritti</div>
-        <h3>Posti disponibili</h3>
-      </div>
-      <div class="counter"><span id="iscritti">24</span><small> / <span id="massimo">32</span></small></div>
-    </div>
-    <div class="progress"><i id="barra"></i></div>
-    <div class="note" id="posti"></div>
-  </section>
+  <div class="grain"></div>
+  <div class="corner tl"></div>
+  <div class="corner br"></div>
 
-  <section class="section">
-    <h3>馃摐 Regolamento</h3>
-    <div class="placeholder">
-      Il regolamento sar脿 pubblicato qui prossimamente.
-    </div>
-  </section>
+  <div class="top-bar">
+    <div class="tag">Torneo Ufficiale</div>
+    <div class="tag alt">1v1 &middot; SOLO PS5</div>
+  </div>
 
-  <section class="section">
-    <h3>馃搷 Dove si gioca</h3>
-    <p>Cervinara</p>
-  </section>
+  <div class="headline">
+    <div class="pre-title">Iscrizioni Aperte</div>
+    <div class="title-fifa">FIFA<span class="title-26">26</span></div>
+    <div class="subtitle-torneo">TORNEO<span> · </span>CERVINARA</div>
+  </div>
 
-  <section class="section">
-    <h3>馃弳 Montepremi</h3>
-    <p>Premi cash per i primi classificati. L'ammontare esatto sar脿 comunicato in base al numero di iscritti.</p>
-  </section>
+  <div class="info-strip">
+    <div class="info-block">
+      <div class="info-label">Data Inizio</div>
+      <div class="info-value dates">16 OTT</div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Data Fine</div>
+      <div class="info-value dates">18 OTT</div>
+    </div>
+    <div class="info-block">
+      <div class="info-label">Anno</div>
+      <div class="info-value">2026</div>
+    </div>
+  </div>
 
-  <div class="footer">
-    Torneo FIFA 26 路 Cervinara 路 16鈥?8 Ottobre 2026
-  </div>
-</main>
+  <div class="location-section">
+    <div class="location-banner">
+      <div class="pin">📍 dove si gioca</div>
+      <div class="city">CERV<em>I</em>NARA</div>
+    </div>
+    <div class="maps-qr-wrap">
+      <div class="maps-qr-box">
+        <svg viewBox="0 0 35 35" xmlns="http://www.w3.org/2000/svg"><path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM9,1H10V2H9zM10,1H11V2H10zM14,1H15V2H14zM15,1H16V2H15zM16,1H17V2H16zM17,1H18V2H17zM18,1H19V2H18zM19,1H20V2H19zM24,1H25V2H24zM27,1H28V2H27zM28,1H29V2H28zM29,1H30V2H29zM30,1H31V2H30zM31,1H32V2H31zM32,1H33V2H32zM33,1H34V2H33zM1,2H2V3H1zM7,2H8V3H7zM10,2H11V3H10zM14,2H15V3H14zM15,2H16V3H15zM17,2H18V3H17zM19,2H20V3H19zM20,2H21V3H20zM23,2H24V3H23zM27,2H28V3H27zM33,2H34V3H33zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM11,3H12V4H11zM12,3H13V4H12zM15,3H16V4H15zM17,3H18V4H17zM18,3H19V4H18zM19,3H20V4H19zM20,3H21V4H20zM21,3H22V4H21zM22,3H23V4H22zM25,3H26V4H25zM27,3H28V4H27zM29,3H30V4H29zM30,3H31V4H30zM31,3H32V4H31zM33,3H34V4H33zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM11,4H12V5H11zM12,4H13V5H12zM16,4H17V5H16zM17,4H18V5H17zM19,4H20V5H19zM20,4H21V5H20zM24,4H25V5H24zM27,4H28V5H27zM29,4H30V5H29zM30,4H31V5H30zM31,4H32V5H31zM33,4H34V5H33zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM9,5H10V6H9zM10,5H11V6H10zM13,5H14V6H13zM14,5H15V6H14zM17,5H18V6H17zM18,5H19V6H18zM19,5H20V6H19zM22,5H23V6H22zM23,5H24V6H23zM24,5H25V6H24zM27,5H28V6H27zM29,5H30V6H29zM30,5H31V6H30zM31,5H32V6H31zM33,5H34V6H33zM1,6H2V7H1zM7,6H8V7H7zM9,6H10V7H9zM10,6H11V7H10zM11,6H12V7H11zM12,6H13V7H12zM13,6H14V7H13zM14,6H15V7H14zM16,6H17V7H16zM20,6H21V7H20zM21,6H22V7H21zM22,6H23V7H22zM23,6H24V7H23zM27,6H28V7H27zM33,6H34V7H33zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM25,7H26V8H25zM27,7H28V8H27zM28,7H29V8H28zM29,7H30V8H29zM30,7H31V8H30zM31,7H32V8H31zM32,7H33V8H32zM33,7H34V8H33zM9,8H10V9H9zM11,8H12V9H11zM15,8H16V9H15zM18,8H19V9H18zM19,8H20V9H19zM20,8H21V9H20zM21,8H22V9H21zM22,8H23V9H22zM24,8H25V9H24zM25,8H26V9H25zM1,9H2V10H1zM5,9H6V10H5zM7,9H8V10H7zM8,9H9V10H8zM9,9H10V10H9zM10,9H11V10H10zM11,9H12V10H11zM16,9H17V10H16zM17,9H18V10H17zM18,9H19V10H18zM19,9H20V10H19zM20,9H21V10H20zM21,9H22V10H21zM22,9H23V10H22zM23,9H24V10H23zM25,9H26V10H25zM26,9H27V10H26zM27,9H28V10H27zM28,9H29V10H28zM29,9H30V10H29zM30,9H31V10H30zM33,9H34V10H33zM8,10H9V11H8zM13,10H14V11H13zM15,10H16V11H15zM16,10H17V11H16zM17,10H18V11H17zM18,10H19V11H18zM19,10H20V11H19zM24,10H25V11H24zM26,10H27V11H26zM30,10H31V11H30zM31,10H32V11H31zM32,10H33V11H32zM3,11H4V12H3zM4,11H5V12H4zM5,11H6V12H5zM6,11H7V12H6zM7,11H8V12H7zM10,11H11V12H10zM13,11H14V12H13zM14,11H15V12H14zM15,11H16V12H15zM16,11H17V12H16zM19,11H20V12H19zM21,11H22V12H21zM23,11H24V12H23zM24,11H25V12H24zM27,11H28V12H27zM30,11H31V12H30zM32,11H33V12H32zM2,12H3V13H2zM3,12H4V13H3zM4,12H5V13H4zM9,12H10V13H9zM12,12H13V13H12zM13,12H14V13H13zM14,12H15V13H14zM18,12H19V13H18zM20,12H21V13H20zM22,12H23V13H22zM23,12H24V13H23zM25,12H26V13H25zM26,12H27V13H26zM32,12H33V13H32zM33,12H34V13H33zM1,13H2V14H1zM2,13H3V14H2zM3,13H4V14H3zM4,13H5V14H4zM6,13H7V14H6zM7,13H8V14H7zM8,13H9V14H8zM11,13H12V14H11zM14,13H15V14H14zM16,13H17V14H16zM17,13H18V14H17zM18,13H19V14H18zM20,13H21V14H20zM22,13H23V14H22zM23,13H24V14H23zM24,13H25V14H24zM26,13H27V14H26zM27,13H28V14H27zM29,13H30V14H29zM30,13H31V14H30zM32,13H33V14H32zM33,13H34V14H33zM1,14H2V15H1zM2,14H3V15H2zM3,14H4V15H3zM4,14H5V15H4zM5,14H6V15H5zM8,14H9V15H8zM11,14H12V15H11zM12,14H13V15H12zM15,14H16V15H15zM18,14H19V15H18zM19,14H20V15H19zM22,14H23V15H22zM23,14H24V15H23zM24,14H25V15H24zM28,14H29V15H28zM2,15H3V16H2zM7,15H8V16H7zM9,15H10V16H9zM10,15H11V16H10zM12,15H13V16H12zM13,15H14V16H13zM14,15H15V16H14zM16,15H17V16H16zM19,15H20V16H19zM24,15H25V16H24zM25,15H26V16H25zM26,15H27V16H26zM27,15H28V16H27zM28,15H29V16H28zM29,15H30V16H29zM30,15H31V16H30zM32,15H33V16H32zM1,16H2V17H1zM3,16H4V17H3zM4,16H5V17H4zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM12,16H13V17H12zM14,16H15V17H14zM15,16H16V17H15zM16,16H17V17H16zM17,16H18V17H17zM18,16H19V17H18zM19,16H20V17H19zM20,16H21V17H20zM22,16H23V17H22zM24,16H25V17H24zM26,16H27V17H26zM27,16H28V17H27zM28,16H29V17H28zM29,16H30V17H29zM30,16H31V17H30zM1,17H2V18H1zM4,17H5V18H4zM7,17H8V18H7zM10,17H11V18H10zM13,17H14V18H13zM15,17H16V18H15zM18,17H19V18H18zM20,17H21V18H20zM21,17H22V18H21zM22,17H23V18H22zM23,17H24V18H23zM25,17H26V18H25zM27,17H28V18H27zM29,17H30V18H29zM32,17H33V18H32zM1,18H2V19H1zM2,18H3V19H2zM3,18H4V19H3zM5,18H6V19H5zM9,18H10V19H9zM10,18H11V19H10zM13,18H14V19H13zM14,18H15V19H14zM16,18H17V19H16zM19,18H20V19H19zM22,18H23V19H22zM24,18H25V19H24zM25,18H26V19H25zM30,18H31V19H30zM31,18H32V19H31zM32,18H33V19H32zM3,19H4V20H3zM4,19H5V20H4zM6,19H7V20H6zM7,19H8V20H7zM10,19H11V20H10zM11,19H12V20H11zM13,19H14V20H13zM14,19H15V20H14zM15,19H16V20H15zM16,19H17V20H16zM18,19H19V20H18zM22,19H23V20H22zM23,19H24V20H23zM24,19H25V20H24zM25,19H26V20H25zM26,19H27V20H26zM27,19H28V20H27zM28,19H29V20H28zM30,19H31V20H30zM32,19H33V20H32zM1,20H2V21H1zM3,20H4V21H3zM4,20H5V21H4zM10,20H11V21H10zM11,20H12V21H11zM17,20H18V21H17zM18,20H19V21H18zM19,20H20V21H19zM20,20H21V21H20zM21,20H22V21H21zM22,20H23V21H22zM25,20H26V21H25zM26,20H27V21H26zM28,20H29V21H28zM33,20H34V21H33zM1,21H2V22H1zM3,21H4V22H3zM7,21H8V22H7zM8,21H9V22H8zM9,21H10V22H9zM10,21H11V22H10zM15,21H16V22H15zM18,21H19V22H18zM22,21H23V22H22zM26,21H27V22H26zM27,21H28V22H27zM28,21H29V22H28zM29,21H30V22H29zM30,21H31V22H30zM32,21H33V22H32zM33,21H34V22H33zM1,22H2V23H1zM2,22H3V23H2zM3,22H4V23H3zM6,22H7V23H6zM12,22H13V23H12zM13,22H14V23H13zM14,22H15V23H14zM15,22H16V23H15zM17,22H18V23H17zM18,22H19V23H18zM23,22H24V23H23zM24,22H25V23H24zM28,22H29V23H28zM30,22H31V23H30zM32,22H33V23H32zM4,23H5V24H4zM6,23H7V24H6zM7,23H8V24H7zM11,23H12V24H11zM12,23H13V24H12zM15,23H16V24H15zM17,23H18V24H17zM18,23H19V24H18zM19,23H20V24H19zM21,23H22V24H21zM24,23H25V24H24zM26,23H27V24H26zM29,23H30V24H29zM31,23H32V24H31zM32,23H33V24H32zM5,24H6V25H5zM6,24H7V25H6zM8,24H9V25H8zM9,24H10V25H9zM11,24H12V25H11zM12,24H13V25H12zM14,24H15V25H14zM15,24H16V25H15zM18,24H19V25H18zM19,24H20V25H19zM21,24H22V25H21zM22,24H23V25H22zM25,24H26V25H25zM26,24H27V25H26zM27,24H28V25H27zM28,24H29V25H28zM29,24H30V25H29zM30,24H31V25H30zM32,24H33V25H32zM1,25H2V26H1zM2,25H3V26H2zM3,25H4V26H3zM5,25H6V26H5zM7,25H8V26H7zM8,25H9V26H8zM9,25H10V26H9zM10,25H11V26H10zM16,25H17V26H16zM17,25H18V26H17zM18,25H19V26H18zM20,25H21V26H20zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM25,25H26V26H25zM26,25H27V26H26zM27,25H28V26H27zM28,25H29V26H28zM29,25H30V26H29zM30,25H31V26H30zM32,25H33V26H32zM9,26H10V27H9zM10,26H11V27H10zM11,26H12V27H11zM12,26H13V27H12zM13,26H14V27H13zM14,26H15V27H14zM16,26H17V27H16zM17,26H18V27H17zM19,26H20V27H19zM21,26H22V27H21zM22,26H23V27H22zM24,26H25V27H24zM25,26H26V27H25zM29,26H30V27H29zM31,26H32V27H31zM1,27H2V28H1zM2,27H3V28H2zM3,27H4V28H3zM4,27H5V28H4zM5,27H6V28H5zM6,27H7V28H6zM7,27H8V28H7zM9,27H10V28H9zM11,27H12V28H11zM12,27H13V28H12zM15,27H16V28H15zM16,27H17V28H16zM17,27H18V28H17zM21,27H22V28H21zM22,27H23V28H22zM25,27H26V28H25zM27,27H28V28H27zM29,27H30V28H29zM30,27H31V28H30zM32,27H33V28H32zM1,28H2V29H1zM7,28H8V29H7zM10,28H11V29H10zM16,28H17V29H16zM17,28H18V29H17zM18,28H19V29H18zM21,28H22V29H21zM22,28H23V29H22zM25,28H26V29H25zM29,28H30V29H29zM32,28H33V29H32zM1,29H2V30H1zM3,29H4V30H3zM4,29H5V30H4zM5,29H6V30H5zM7,29H8V30H7zM9,29H10V30H9zM11,29H12V30H11zM12,29H13V30H12zM15,29H16V30H15zM18,29H19V30H18zM20,29H21V30H20zM21,29H22V30H21zM23,29H24V30H23zM25,29H26V30H25zM26,29H27V30H26zM27,29H28V30H27zM28,29H29V30H28zM29,29H30V30H29zM30,29H31V30H30zM32,29H33V30H32zM33,29H34V30H33zM1,30H2V31H1zM3,30H4V31H3zM4,30H5V31H4zM5,30H6V31H5zM7,30H8V31H7zM10,30H11V31H10zM14,30H15V31H14zM15,30H16V31H15zM19,30H20V31H19zM22,30H23V31H22zM24,30H25V31H24zM27,30H28V31H27zM28,30H29V31H28zM29,30H30V31H29zM30,30H31V31H30zM1,31H2V32H1zM3,31H4V32H3zM4,31H5V32H4zM5,31H6V32H5zM7,31H8V32H7zM11,31H12V32H11zM14,31H15V32H14zM15,31H16V32H15zM16,31H17V32H16zM18,31H19V32H18zM21,31H22V32H21zM22,31H23V32H22zM26,31H27V32H26zM27,31H28V32H27zM28,31H29V32H28zM29,31H30V32H29zM31,31H32V32H31zM1,32H2V33H1zM7,32H8V33H7zM12,32H13V33H12zM13,32H14V33H13zM14,32H15V33H14zM16,32H17V33H16zM17,32H18V33H17zM18,32H19V33H18zM19,32H20V33H19zM20,32H21V33H20zM22,32H23V33H22zM23,32H24V33H23zM24,32H25V33H24zM25,32H26V33H25zM1,33H2V34H1zM2,33H3V34H2zM3,33H4V34H3zM4,33H5V34H4zM5,33H6V34H5zM6,33H7V34H6zM7,33H8V34H7zM9,33H10V34H9zM10,33H11V34H10zM12,33H13V34H12zM13,33H14V34H13zM14,33H15V34H14zM17,33H18V34H17zM18,33H19V34H18zM20,33H21V34H20zM21,33H22V34H21zM22,33H23V34H22zM23,33H24V34H23zM25,33H26V34H25zM27,33H28V34H27zM33,33H34V34H33z" fill="#111111"/></svg>
+      </div>
+      <div class="maps-qr-caption">Scansiona per il navigatore</div>
+    </div>
+  </div>
 
-<script>
-  // ===== MODIFICA QUI =====
-  const iscritti = 24;
-  const massimo = 32;
-  // ========================
+  <div class="prize-section">
+    <svg class="prize-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 10H48V24C48 33.9411 40.8366 42 32 42C23.1634 42 16 33.9411 16 24V10Z" stroke="#ffcc33" stroke-width="3"/>
+      <path d="M16 14H8C8 22 12 27 16 27" stroke="#ffcc33" stroke-width="3" stroke-linecap="round"/>
+      <path d="M48 14H56C56 22 52 27 48 27" stroke="#ffcc33" stroke-width="3" stroke-linecap="round"/>
+      <path d="M32 42V50" stroke="#ffcc33" stroke-width="3"/>
+      <path d="M22 58H42L38 50H26L22 58Z" stroke="#ffcc33" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+    <div class="prize-text-wrap">
+      <div class="prize-title">Montepremi in denaro</div>
+      <div class="prize-desc">Premi cash per i primi classificati — l'ammontare esatto sarà comunicato in base al numero di iscritti.</div>
+    </div>
+  </div>
 
-  document.getElementById("iscritti").textContent = iscritti;
-  document.getElementById("massimo").textContent = massimo;
+  <div class="format-note">
+    <b>Modalità e durata del torneo</b> saranno definite in base al numero di partecipanti.<br>
+    Iscriviti subito per confermare il tuo posto!
+  </div>
 
-  const percentuale = Math.min(100, (iscritti / massimo) * 100);
-  document.getElementById("barra").style.width = percentuale + "%";
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-cta">Iscriviti ora</div>
+      <div class="footer-sub">Posti limitati — contatta gli organizzatori per info e iscrizioni.</div>
+      <div class="phone-list">
+        <div class="phone-row">
+          <span class="phone-icon">📞</span>
+          <span class="phone-num">[ NUMERO 1 ]</span>
+        </div>
+        <div class="phone-row">
+          <span class="phone-icon">📞</span>
+          <span class="phone-num">[ NUMERO 2 ]</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="qr-wrap">
+        <div class="qr-box">
+          <svg viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg"><path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM11,1H12V2H11zM12,1H13V2H12zM13,1H14V2H13zM15,1H16V2H15zM19,1H20V2H19zM20,1H21V2H20zM21,1H22V2H21zM22,1H23V2H22zM23,1H24V2H23zM24,1H25V2H24zM25,1H26V2H25zM1,2H2V3H1zM7,2H8V3H7zM10,2H11V3H10zM12,2H13V3H12zM16,2H17V3H16zM19,2H20V3H19zM25,2H26V3H25zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM9,3H10V4H9zM11,3H12V4H11zM12,3H13V4H12zM13,3H14V4H13zM16,3H17V4H16zM19,3H20V4H19zM21,3H22V4H21zM22,3H23V4H22zM23,3H24V4H23zM25,3H26V4H25zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM11,4H12V5H11zM13,4H14V5H13zM14,4H15V5H14zM16,4H17V5H16zM17,4H18V5H17zM19,4H20V5H19zM21,4H22V5H21zM22,4H23V5H22zM23,4H24V5H23zM25,4H26V5H25zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM9,5H10V6H9zM11,5H12V6H11zM15,5H16V6H15zM19,5H20V6H19zM21,5H22V6H21zM22,5H23V6H22zM23,5H24V6H23zM25,5H26V6H25zM1,6H2V7H1zM7,6H8V7H7zM9,6H10V7H9zM10,6H11V7H10zM13,6H14V7H13zM16,6H17V7H16zM17,6H18V7H17zM19,6H20V7H19zM25,6H26V7H25zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM20,7H21V8H20zM21,7H22V8H21zM22,7H23V8H22zM23,7H24V8H23zM24,7H25V8H24zM25,7H26V8H25zM9,8H10V9H9zM10,8H11V9H10zM11,8H12V9H11zM12,8H13V9H12zM16,8H17V9H16zM1,9H2V10H1zM3,9H4V10H3zM4,9H5V10H4zM5,9H6V10H5zM6,9H7V10H6zM7,9H8V10H7zM13,9H14V10H13zM14,9H15V10H14zM17,9H18V10H17zM19,9H20V10H19zM20,9H21V10H20zM21,9H22V10H21zM22,9H23V10H22zM23,9H24V10H23zM1,10H2V11H1zM4,10H5V11H4zM6,10H7V11H6zM8,10H9V11H8zM10,10H11V11H10zM12,10H13V11H12zM15,10H16V11H15zM20,10H21V11H20zM24,10H25V11H24zM2,11H3V12H2zM3,11H4V12H3zM4,11H5V12H4zM5,11H6V12H5zM6,11H7V12H6zM7,11H8V12H7zM8,11H9V12H8zM9,11H10V12H9zM10,11H11V12H10zM11,11H12V12H11zM12,11H13V12H12zM13,11H14V12H13zM16,11H17V12H16zM17,11H18V12H17zM19,11H20V12H19zM20,11H21V12H20zM21,11H22V12H21zM22,11H23V12H22zM24,11H25V12H24zM25,11H26V12H25zM4,12H5V13H4zM8,12H9V13H8zM9,12H10V13H9zM10,12H11V13H10zM11,12H12V13H11zM12,12H13V13H12zM18,12H19V13H18zM19,12H20V13H19zM20,12H21V13H20zM25,12H26V13H25zM2,13H3V14H2zM3,13H4V14H3zM7,13H8V14H7zM9,13H10V14H9zM10,13H11V14H10zM11,13H12V14H11zM13,13H14V14H13zM14,13H15V14H14zM16,13H17V14H16zM17,13H18V14H17zM19,13H20V14H19zM20,13H21V14H20zM21,13H22V14H21zM23,13H24V14H23zM24,13H25V14H24zM25,13H26V14H25zM1,14H2V15H1zM4,14H5V15H4zM5,14H6V15H5zM8,14H9V15H8zM10,14H11V15H10zM13,14H14V15H13zM15,14H16V15H15zM20,14H21V15H20zM22,14H23V15H22zM24,14H25V15H24zM1,15H2V16H1zM6,15H7V16H6zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM13,15H14V16H13zM16,15H17V16H16zM17,15H18V16H17zM18,15H19V16H18zM20,15H21V16H20zM21,15H22V16H21zM22,15H23V16H22zM24,15H25V16H24zM25,15H26V16H25zM1,16H2V17H1zM4,16H5V17H4zM5,16H6V17H5zM6,16H7V17H6zM9,16H10V17H9zM10,16H11V17H10zM11,16H12V17H11zM13,16H14V17H13zM17,16H18V17H17zM20,16H21V17H20zM21,16H22V17H21zM25,16H26V17H25zM1,17H2V18H1zM3,17H4V18H3zM5,17H6V18H5zM6,17H7V18H6zM7,17H8V18H7zM8,17H9V18H8zM11,17H12V18H11zM14,17H15V18H14zM17,17H18V18H17zM18,17H19V18H18zM19,17H20V18H19zM20,17H21V18H20zM21,17H22V18H21zM23,17H24V18H23zM9,18H10V19H9zM12,18H13V19H12zM13,18H14V19H13zM15,18H16V19H15zM16,18H17V19H16zM17,18H18V19H17zM21,18H22V19H21zM22,18H23V19H22zM1,19H2V20H1zM2,19H3V20H2zM3,19H4V20H3zM4,19H5V20H4zM5,19H6V20H5zM6,19H7V20H6zM7,19H8V20H7zM10,19H11V20H10zM13,19H14V20H13zM17,19H18V20H17zM19,19H20V20H19zM21,19H22V20H21zM23,19H24V20H23zM24,19H25V20H24zM25,19H26V20H25zM1,20H2V21H1zM7,20H8V21H7zM9,20H10V21H9zM11,20H12V21H11zM13,20H14V21H13zM16,20H17V21H16zM17,20H18V21H17zM21,20H22V21H21zM22,20H23V21H22zM1,21H2V22H1zM3,21H4V22H3zM4,21H5V22H4zM5,21H6V22H5zM7,21H8V22H7zM9,21H10V22H9zM14,21H15V22H14zM16,21H17V22H16zM17,21H18V22H17zM18,21H19V22H18zM19,21H20V22H19zM20,21H21V22H20zM21,21H22V22H21zM23,21H24V22H23zM1,22H2V23H1zM3,22H4V23H3zM4,22H5V23H4zM5,22H6V23H5zM7,22H8V23H7zM9,22H10V23H9zM10,22H11V23H10zM11,22H12V23H11zM12,22H13V23H12zM13,22H14V23H13zM15,22H16V23H15zM18,22H19V23H18zM19,22H20V23H19zM21,22H22V23H21zM22,22H23V23H22zM23,22H24V23H23zM24,22H25V23H24zM25,22H26V23H25zM1,23H2V24H1zM3,23H4V24H3zM4,23H5V24H4zM5,23H6V24H5zM7,23H8V24H7zM9,23H10V24H9zM13,23H14V24H13zM22,23H23V24H22zM23,23H24V24H23zM25,23H26V24H25zM1,24H2V25H1zM7,24H8V25H7zM11,24H12V25H11zM13,24H14V25H13zM16,24H17V25H16zM17,24H18V25H17zM18,24H19V25H18zM20,24H21V25H20zM21,24H22V25H21zM22,24H23V25H22zM25,24H26V25H25zM1,25H2V26H1zM2,25H3V26H2zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM6,25H7V26H6zM7,25H8V26H7zM9,25H10V26H9zM10,25H11V26H10zM14,25H15V26H14zM18,25H19V26H18zM19,25H20V26H19zM20,25H21V26H20zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25z" fill="#111111"/></svg>
+        </div>
+        <div class="qr-caption">Scansiona · WhatsApp</div>
+      </div>
+    </div>
+  </div>
 
-  const disponibili = Math.max(0, massimo - iscritti);
-  document.getElementById("posti").textContent =
-    disponibili === 0
-      ? "Torneo al completo!"
-      : `Ancora ${disponibili} ${disponibili === 1 ? "posto disponibile" : "posti disponibili"}.`;
-</script>
+</div>
 
 </body>
 </html>
- HO QUETSA PAIGNA HTM DI CUI DOVREI PUBBLICARLA SU GITHUB ? O DOVE ? E STATICA
